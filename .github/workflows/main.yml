@@ -24,15 +24,15 @@ jobs:
     steps:
       # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
       - uses: actions/checkout@v3
-      
+
       - name: Setup Node.js environment
         uses: actions/setup-node@v3.2.0
-        
+
       - name: Run multi-line script (npm install and build)
         run:  |
-          npm install
-          npm run build
-          
+          yarn install
+          yarn generate
+
       - name: S3 Sync
         # You may pin to the exact commit or the version.
         # uses: jakejarvis/s3-sync-action@be0c4ab89158cac4278689ebedd8407dd5f35a83
@@ -45,7 +45,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           AWS_REGION: 'eu-central-1'
           SOURCE_DIR: 'dist'
-          
+
       - name: Invalidate AWS CloudFront
         # You may pin to the exact commit or the version.
         # uses: chetan/invalidate-cloudfront-action@74a68bb493a1022d52af8a4f26ce74103c3daf2f
@@ -56,4 +56,4 @@ jobs:
           AWS_ACCESS_KEY_ID: ${{secrets.AWS_ACCESS_KEY_ID}}
           AWS_SECRET_ACCESS_KEY: ${{secrets.AWS_SECRET_ACCESS_KEY}}
           AWS_REGION: 'eu-central-1'
-        
+
